@@ -1,0 +1,50 @@
+bool isCryptSolution(std::vector<std::string> crypt, std::vector<std::vector<char>> solution) 
+{
+    long int firstNumber, secondNumber, output;
+    string firstNumber1="", secondNumber1="", output1="";
+    for(int i=0; i<crypt[0].size();i++)
+    {
+        for(int j=0; j<solution.size(); j++)
+        {
+            if(crypt[0][i] == solution[j][0])
+            {
+                crypt[0][i] = solution[j][1];
+                firstNumber1 += solution[j][1];
+                break;
+            }
+        }
+    }
+    for(int i=0; i<crypt[1].size();i++)
+    {
+        for(int j=0; j<solution.size(); j++)
+        {
+            if(crypt[1][i] == solution[j][0])
+            {
+                crypt[1][i] = solution[j][1];
+                secondNumber1 += solution[j][1];
+                break;
+            }
+        }
+    }
+    for(int i=0; i<crypt[2].size();i++)
+    {
+        for(int j=0; j<solution.size(); j++)
+        {
+            if(crypt[2][i] == solution[j][0])
+            {
+                crypt[2][i] = solution[j][1];
+                output1 += solution[j][1];
+                break;
+            }
+        }
+    }
+    if((firstNumber1.length() > 1 && firstNumber1[0] == '0')||(secondNumber1.length() > 1 && secondNumber1[0] == '0') ||(output1.length() > 1 && output1[0] == '0'))
+        return false;
+    firstNumber = stol(firstNumber1);
+    secondNumber = stol(secondNumber1);
+    output = stol(output1);
+
+    if((firstNumber + secondNumber) == output)
+        return true;
+    return false;
+}
