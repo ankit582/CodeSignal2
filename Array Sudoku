@@ -1,0 +1,69 @@
+bool sudoku2(std::vector<std::vector<char>> grid) 
+{
+    vector<int> seen (10);
+
+    for(int j=0; j<10; j++)
+        seen[j] = 0;
+    for(int i=0; i<9; i++)
+    {
+        for(int j=0; j<9; j++)
+        {
+            if(grid[i][j] != '.')
+            {
+                int temp = grid[i][j] - 48;
+                seen[temp]++;
+            }   
+        }
+        for(int j=0; j<10; j++)
+        {
+            if(seen[j] > 1)
+                return false;
+            seen[j] = 0;
+        }
+    }
+    for(int i=0; i<9; i++)
+    {
+        for(int j=0; j<9; j++)
+        {
+            if(grid[j][i] != '.')
+            {
+                int temp = grid[j][i] - 48;
+                seen[temp]++;
+            }
+        }
+        for(int j=0; j<10; j++)
+        {
+            if(seen[j] > 1)
+                return false;
+            seen[j] = 0;
+        }
+    }
+    int iter = 0,iter1 = 0;
+    for(int i=0; i<9; i++)
+    {
+        for(int j=0; j<3; j++)
+        {
+            for(int k=0; k<3; k++)
+            {
+                if(grid[j+iter1][k+iter] != '.')
+                {
+                    int temp = grid[j+iter1][k+iter] - 48;
+                    seen[temp]++;
+                }
+            }
+        }
+        for(int j=0; j<10; j++)
+        {
+            if(seen[j] > 1)
+                return false;
+            seen[j] = 0;
+        }
+        iter+=3;
+        if(iter == 9)
+        {
+            iter =0;
+            iter1 +=3;
+        }
+    }
+    return true;
+}
