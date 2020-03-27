@@ -1,0 +1,57 @@
+// Singly-linked lists are already defined with this interface:
+// template<typename T>
+// struct ListNode {
+//   ListNode(const T &v) : value(v), next(nullptr) {}
+//   T value;
+//   ListNode *next;
+// };
+//
+ListNode<int> * addTwoHugeNumbers(ListNode<int> * a, ListNode<int> * b) 
+{
+    vector<int> A,B;
+    while(a)
+    {
+        A.push_back(a->value);
+        a = a->next;
+    }
+    reverse(A.begin(), A.end());
+    while (b) 
+    {
+        B.push_back(b->value);
+        b = b->next;
+    }
+    reverse(B.begin(), B.end());
+    if (A.size() > B.size()) swap(A, B);
+    
+    vector <int> result;
+    int carry = 0;
+    for (int i = 0; i < A.size(); ++i) 
+    {
+        int temp = A[i] + B[i] + carry;
+        carry = temp / 10000;
+        temp %= 10000;
+        result.push_back(temp);
+    }
+    for (int i = A.size(); i < B.size(); ++i) 
+    {
+        int temp = B[i] + carry;
+        carry = temp / 10000;
+        temp %= 10000;
+        result.push_back(temp);
+    }
+    if (carry) 
+        result.push_back(1);
+
+    reverse(result.begin(), result.end());
+    
+    ListNode<int> *ret = nullptr, *cur, *tmp;
+    for (int i = 0; i < result.size(); ++i) 
+    {
+        tmp = new ListNode<int> (result[i]);
+        if (!ret) 
+            ret = cur = tmp;
+        else 
+            cur->next = tmp, cur = cur->next;
+    }
+    return ret;
+}
